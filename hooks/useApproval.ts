@@ -23,6 +23,16 @@ export function useQTAApproval() {
     },
   });
 
+  function toBigIntSafe(v: unknown): bigint {
+  if (typeof v === 'bigint') return v;
+  if (typeof v === 'string') {
+    if (/^\d+$/.test(v)) return BigInt(v);
+    if (/^0x[0-9a-fA-F]+$/.test(v)) return BigInt(v);
+  }
+  if (typeof v === 'number' && Number.isFinite(v)) return BigInt(Math.trunc(v));
+  return 0n;
+}
+
   const approveQTA = async (amount: string) => {
     if (!address) {
       toast.error('Please connect your wallet');
@@ -53,9 +63,9 @@ export function useQTAApproval() {
   };
 
   const isApproved = (amount: string): boolean => {
-    if (!allowance) return false;
+    const allowanceValue = toBigIntSafe(allowance);
     const amountInWei = parseQTA(amount);
-    return allowance >= amountInWei;
+    return allowanceValue >= amountInWei;
   };
 
   return {

@@ -9,6 +9,7 @@ import { Wallet, Coins } from 'lucide-react';
 export function WalletConnection() {
   const { isConnected } = useAccount();
   const { balance } = useQTABalance();
+    const balanceValue: bigint = typeof balance === 'bigint' ? balance : 0n;
 
   return (
     <div className="flex items-center gap-4">
@@ -16,7 +17,7 @@ export function WalletConnection() {
         <div className="flex items-center gap-2 px-3 py-2 bg-blue-600 rounded-lg">
           <Coins className="h-4 w-4 text-white" />
           <span className="text-sm font-medium text-white">
-            {formatQTA(balance)} QTA
+            {formatQTA(balanceValue)} QTA
           </span>
         </div>
       )}

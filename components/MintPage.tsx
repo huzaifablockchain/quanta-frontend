@@ -23,6 +23,23 @@ export function MintPage() {
   const { address, isConnected } = useAccount();
   const { balance } = useQTABalance();
   const { approveQTA, isApproved, isApproving } = useQTAApproval();
+
+
+function toBigIntSafe(v: unknown): bigint {
+  if (typeof v === 'bigint') return v;
+  if (typeof v === 'string') {
+    // try numeric string -> bigint (handles "0", "123456")
+    if (/^\d+$/.test(v)) return BigInt(v);
+    // if it's hex (e.g. "0x..."), parse it:
+    if (/^0x[0-9a-fA-F]+$/.test(v)) return BigInt(v);
+  }
+  if (typeof v === 'number' && Number.isFinite(v)) {
+    // convert finite number to bigint (truncates fractional)
+    return BigInt(Math.trunc(v));
+  }
+  return 0n;
+}
+
   
   // Check if NFT collection is approved to spend QTA tokens
   const { data: qtaAllowance } = useReadContract({
@@ -59,10 +76,15 @@ export function MintPage() {
     functionName: 'mintingFee',
   });
 
-  const mintingFeeFormatted = mintingFee ? formatQTA(mintingFee) : '0';
-  const hasEnoughBalance = balance >= (mintingFee || 0n);
-  const needsApproval = !isApproved(mintingFeeFormatted);
+  // Fix: Ensure mintingFee is properly typed as bigint
+const mintingFeeValue = typeof mintingFee === 'bigint' ? mintingFee : 0n;
+const balanceValue = typeof balance === 'bigint' ? balance : 0n;
+const mintingFeeFormatted = formatQTA(mintingFeeValue);
+const hasEnoughBalance = balanceValue >= mintingFeeValue;
+const needsApproval = !isApproved(mintingFeeFormatted);
+const qtaAllowanceValue = toBigIntSafe(qtaAllowance);
 
+  
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -130,7 +152,8 @@ export function MintPage() {
     }
 
     // Check if NFT collection needs approval to spend QTA tokens
-    const hasQTAApproval = qtaAllowance && qtaAllowance >= (mintingFee || 0n);
+    const validMintingFee = mintingFee && typeof mintingFee === 'bigint' ? mintingFee : 0n;
+    const hasQTAApproval = qtaAllowance && qtaAllowanceValue >= validMintingFee;
     if (!hasQTAApproval) {
       setProgress('Approving QTA tokens for NFT collection...');
       try {
@@ -138,7 +161,7 @@ export function MintPage() {
           address: CONTRACT_ADDRESSES.QTA_TOKEN,
           abi: QTA_TOKEN_ABI,
           functionName: 'approve',
-          args: [CONTRACT_ADDRESSES.NFT_COLLECTION, mintingFee || 0n],
+          args: [CONTRACT_ADDRESSES.NFT_COLLECTION, validMintingFee],
         });
         toast.success('QTA tokens approved for NFT collection!');
       } catch (error: any) {
@@ -414,7 +437,7 @@ export function MintPage() {
                   <div className="flex justify-between">
                     <span className="text-slate-400">Your Balance:</span>
                     <span className={`font-medium ${hasEnoughBalance ? 'text-emerald-400' : 'text-red-400'}`}>
-                      {formatQTA(balance)} QTA
+                      {formatQTA(balanceValue)} QTA
                     </span>
                   </div>
                 </div>

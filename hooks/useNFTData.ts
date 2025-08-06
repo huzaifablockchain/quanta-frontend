@@ -48,21 +48,21 @@ export function useNFTData(tokenId: number) {
   });
 
   useEffect(() => {
-    async function fetchMetadata() {
-      if (!tokenURI) return;
-      
-      setLoading(true);
-      setError(null);
-      
-      try {
-        const data = await fetchMetadataFromIPFS(tokenURI);
-        setMetadata(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch metadata');
-      } finally {
-        setLoading(false);
-      }
+  async function fetchMetadata() {
+    if (typeof tokenURI !== 'string') return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await fetchMetadataFromIPFS(tokenURI);
+      setMetadata(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch metadata');
+    } finally {
+      setLoading(false);
     }
+  }
 
     fetchMetadata();
   }, [tokenURI]);

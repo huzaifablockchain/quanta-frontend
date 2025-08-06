@@ -28,26 +28,26 @@ export function NFTCollectionManager() {
   const { address, isConnected } = useAccount();
   const { writeContract } = useWriteContract();
   const publicClient = usePublicClient();
-  
+
   // Get contract owner
   const { data: contractOwner } = useReadContract({
     address: CONTRACT_ADDRESSES.NFT_COLLECTION,
     abi: NFT_COLLECTION_ABI,
     functionName: 'owner',
   });
-  
+
   // Authorized addresses - owner and specific address
   const AUTHORIZED_ADDRESSES = [
     '0x8b616c6FD7E716eEEe89DEf331Ce99D8C8C1E894'
   ];
-  
+
   // Check if current user is authorized (owner or specific address)
   const isAuthorized = isConnected && address && (
     (contractOwner as string)?.toLowerCase() === address.toLowerCase() ||
     AUTHORIZED_ADDRESSES.includes(address.toLowerCase()) ||
     AUTHORIZED_ADDRESSES.includes(address)
   );
-  
+
   const [stats, setStats] = useState<CollectionStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [showBatchMint, setShowBatchMint] = useState(false);
@@ -64,7 +64,7 @@ export function NFTCollectionManager() {
   // Load collection statistics
   const loadStats = async () => {
     if (!publicClient) return;
-    
+
     setLoading(true);
     try {
       const [
@@ -121,6 +121,10 @@ export function NFTCollectionManager() {
     }
   };
 
+  const baseNextId: bigint = (stats && typeof stats.nextTokenId === 'bigint')
+    ? stats.nextTokenId
+    : 0n;
+
   const handleBatchMint = async () => {
     if (!isConnected || batchForm.files.length === 0) return;
 
@@ -131,7 +135,7 @@ export function NFTCollectionManager() {
       // Upload each file and create metadata
       for (let i = 0; i < batchForm.files.length; i++) {
         const file = batchForm.files[i];
-        const name = batchForm.names[i] || `NFT #${stats?.nextTokenId + BigInt(i)}`;
+        const name = batchForm.names[i] || `NFT #${(baseNextId + BigInt(i)).toString()}`;
         const description = batchForm.descriptions[i] || '';
         const attributes = batchForm.attributes[i] || [];
 
@@ -159,7 +163,15 @@ export function NFTCollectionManager() {
 
       // Calculate total fees
       const totalFees = stats!.mintingFee * BigInt(batchForm.files.length);
+      if (totalFees <= 0n) {
+        toast.error('Invalid minting fee. Please check the collection settings.');
+        return;
+      }
 
+      if (!address) {
+        toast.error('Please connect your wallet');
+        return;
+      }
       // Batch mint NFTs
       await writeContract({
         address: CONTRACT_ADDRESSES.NFT_COLLECTION,
@@ -171,7 +183,7 @@ export function NFTCollectionManager() {
       toast.success(`Successfully minted ${batchForm.files.length} NFTs!`);
       setShowBatchMint(false);
       setBatchForm({ files: [], names: [], descriptions: [], attributes: [] });
-      
+
       // Refresh stats
       setTimeout(() => {
         loadStats();
@@ -198,7 +210,7 @@ export function NFTCollectionManager() {
       toast.success('Minting fee updated successfully!');
       setNewMintingFee('');
       setShowSettings(false);
-      
+
       setTimeout(() => {
         loadStats();
       }, 2000);
@@ -222,7 +234,7 @@ export function NFTCollectionManager() {
       toast.success('Max mints per address updated successfully!');
       setNewMaxMints('');
       setShowSettings(false);
-      
+
       setTimeout(() => {
         loadStats();
       }, 2000);
@@ -244,7 +256,7 @@ export function NFTCollectionManager() {
       });
 
       toast.success('Minting fees withdrawn successfully!');
-      
+
       setTimeout(() => {
         loadStats();
       }, 2000);
@@ -422,7 +434,7 @@ export function NFTCollectionManager() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Batch Mint NFTs</h3>
-            
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -515,7 +527,7 @@ export function NFTCollectionManager() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Collection Settings</h3>
-            
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
