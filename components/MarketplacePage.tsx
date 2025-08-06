@@ -45,7 +45,7 @@ export function MarketplacePage() {
   const { approveQTA, isApproved } = useQTAApproval();
   const { writeContract } = useWriteContract();
   const publicClient = usePublicClient();
-  
+
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<'price' | 'newest' | 'oldest'>('newest');
   const [filterBy, setFilterBy] = useState<'all' | 'auction' | 'sale'>('all');
@@ -67,13 +67,13 @@ export function MarketplacePage() {
   // Load all NFTs
   const loadNFTs = async () => {
     if (!totalMinted || !publicClient) return;
-    
+
     setLoading(true);
     const allNFTs: Array<NFTData> = [];
-    
+
     try {
       console.log('Loading all NFTs, total minted:', totalMinted);
-      
+
       // Check each token
       for (let i = 0; i < Number(totalMinted); i++) {
         try {
@@ -84,7 +84,7 @@ export function MarketplacePage() {
             functionName: 'ownerOf',
             args: [BigInt(i)],
           }) as string;
-          
+
           // Check if NFT is listed
           const listing = await publicClient.readContract({
             address: CONTRACT_ADDRESSES.MARKETPLACE,
@@ -92,9 +92,9 @@ export function MarketplacePage() {
             functionName: 'getListing',
             args: [CONTRACT_ADDRESSES.NFT_COLLECTION, BigInt(i)],
           }) as any;
-          
+
           const isListed = listing && listing.active;
-          
+
           allNFTs.push({
             tokenId: i,
             owner,
@@ -114,7 +114,7 @@ export function MarketplacePage() {
           continue;
         }
       }
-      
+
       console.log('Total NFTs found:', allNFTs.length);
       setNfts(allNFTs);
     } catch (error) {
@@ -153,7 +153,7 @@ export function MarketplacePage() {
     }
 
     const priceFormatted = formatQTA(price);
-    
+
     if (!isApproved(priceFormatted)) {
       const approved = await approveQTA(priceFormatted);
       if (!approved) return;
@@ -166,7 +166,7 @@ export function MarketplacePage() {
         functionName: 'buyNow',
         args: [CONTRACT_ADDRESSES.NFT_COLLECTION, BigInt(tokenId)],
       });
-      
+
       toast.success('Purchase successful!');
       // Refresh NFTs after a delay
       setTimeout(() => {
@@ -201,21 +201,21 @@ export function MarketplacePage() {
     }
 
     const bidAmountWei = parseQTA(bidAmount);
-    
+
     // Check if bid meets minimum requirements
-    if (currentListing.listing.highestBid > 0n) {
+    if (currentListing.highestBid > 0n) {
       // Must be at least 2% higher than current bid
-      const minBidIncrement = (currentListing.listing.highestBid * 200n) / 10000n;
-      const minBid = currentListing.listing.highestBid + minBidIncrement;
-      
+      const minBidIncrement = (currentListing.highestBid * 200n) / 10000n;
+      const minBid = currentListing.highestBid + minBidIncrement;
+
       if (bidAmountWei < minBid) {
         toast.error(`Bid must be at least ${formatQTA(minBid)} QTA (2% higher than current bid)`);
         return;
       }
     } else {
       // First bid must meet starting price
-      if (bidAmountWei < currentListing.listing.price) {
-        toast.error(`Bid must be at least ${formatQTA(currentListing.listing.price)} QTA`);
+      if (bidAmountWei < currentListing.price) {
+        toast.error(`Bid must be at least ${formatQTA(currentListing.price)} QTA`);
         return;
       }
     }
@@ -233,7 +233,7 @@ export function MarketplacePage() {
 
     try {
       toast.loading('Placing bid...');
-      
+
       await writeContract({
         address: CONTRACT_ADDRESSES.MARKETPLACE,
         abi: MARKETPLACE_ABI,
@@ -244,7 +244,7 @@ export function MarketplacePage() {
           bidAmountWei,
         ],
       });
-      
+
       toast.dismiss();
       toast.success('Bid placed successfully!');
       setShowBidModal(false);
@@ -271,7 +271,7 @@ export function MarketplacePage() {
         functionName: 'finalizeAuction',
         args: [CONTRACT_ADDRESSES.NFT_COLLECTION, BigInt(tokenId)],
       });
-      
+
       toast.success('Auction finalized successfully!');
       // Refresh NFTs after a delay
       setTimeout(() => {
@@ -293,7 +293,7 @@ export function MarketplacePage() {
         functionName: 'withdrawPendingReturns',
         args: [],
       });
-      
+
       toast.success('Pending returns withdrawn successfully!');
       setPendingReturns(0n);
     } catch (error: any) {
@@ -343,7 +343,7 @@ export function MarketplacePage() {
     <div className="space-y-12">
       {/* Enhanced Hero Section */}
       <div className="relative bg-gradient-to-br from-slate-800 via-slate-900 to-gray-900 rounded-3xl overflow-hidden border border-slate-700/50">
-        <div className="absolute inset-0 bg-black/20"></div>        
+        <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative z-10 p-8 md:p-16">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -353,13 +353,13 @@ export function MarketplacePage() {
                   <span className="text-sm font-medium">Live Marketplace</span>
                   <div className="w-2 h-2 bg-green-400 rounded-full ml-2 animate-pulse"></div>
                 </div>
-                
+
                 <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                  Discover & Collect 
+                  Discover & Collect
                   <span className="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent"> Rare </span>
                   NFTs
                 </h1>
-                
+
                 <p className="text-xl text-white/80 mb-8 max-w-xl">
                   The premier destination for discovering, collecting, and trading extraordinary digital assets on the blockchain.
                 </p>
@@ -392,50 +392,50 @@ export function MarketplacePage() {
                 </div>
               </div>
 
-                <div className="relative">
-  <div className="grid grid-cols-2 gap-4">
-    <div className="space-y-4">
-      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
-        <img
-          src="https://i2.seadn.io/ethereum/0x8a90cab2b38dba80c64b7734e58ee1db38b8992e/7c8f36724756afe46fdf406fdae3d433.png?w=1000000000"
-          alt="NFT"
-          className="w-full h-full object-cover rounded-xl mb-3"
-        />
-        <p className="text-white font-medium text-sm">Doodle in space</p>
-        <p className="text-white/60 text-xs">5 QTA</p>
-      </div>
-      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 transform translate-x-8">
-        <img
-          src="https://i2.seadn.io/ethereum/0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb/67fc91ff36238e9d2dd44825ee48d3/5067fc91ff36238e9d2dd44825ee48d3.png?w=1000"
-          alt="NFT"
-          className="w-full h-full object-cover rounded-xl mb-3"
-        />
-        <p className="text-white font-medium text-sm">Crypto Punk</p>
-        <p className="text-white/60 text-xs">50 QTA</p>
-      </div>
-    </div>
-    <div className="space-y-4 pt-8">
-      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 transform -translate-x-4">
-        <img
-          src="https://i2.seadn.io/base/0x6c7726dcbee2ba4aa240f880ac28dd3230b6cb76/0ec270fd216193ce208d90d3854686/5f0ec270fd216193ce208d90d3854686.png?w=1000"
-          alt="NFT"
-          className="w-full h-full object-cover rounded-xl mb-3"
-        />
-        <p className="text-white font-medium text-sm">Azuki</p>
-        <p className="text-white/60 text-xs">3.2 QTA</p>
-      </div>
-      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
-        <img
-          src="https://i2.seadn.io/base/0x7e72abdf47bd21bf0ed6ea8cb8dad60579f3fb50/616debe1ec357bb98e96dd2024b57d/80616debe1ec357bb98e96dd2024b57d.png?w=1000"
-          alt="NFT"
-          className="w-full object-cover rounded-xl mb-3"
-        />
-        <p className="text-white font-medium text-sm">Bored Ape</p>
-        <p className="text-white/60 text-xs">500 QTA</p>
-      </div>
-    </div>
-  </div>
-</div>
+              <div className="relative">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+                      <img
+                        src="https://i2.seadn.io/ethereum/0x8a90cab2b38dba80c64b7734e58ee1db38b8992e/7c8f36724756afe46fdf406fdae3d433.png?w=1000000000"
+                        alt="NFT"
+                        className="w-full h-full object-cover rounded-xl mb-3"
+                      />
+                      <p className="text-white font-medium text-sm">Doodle in space</p>
+                      <p className="text-white/60 text-xs">5 QTA</p>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 transform translate-x-8">
+                      <img
+                        src="https://i2.seadn.io/ethereum/0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb/67fc91ff36238e9d2dd44825ee48d3/5067fc91ff36238e9d2dd44825ee48d3.png?w=1000"
+                        alt="NFT"
+                        className="w-full h-full object-cover rounded-xl mb-3"
+                      />
+                      <p className="text-white font-medium text-sm">Crypto Punk</p>
+                      <p className="text-white/60 text-xs">50 QTA</p>
+                    </div>
+                  </div>
+                  <div className="space-y-4 pt-8">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 transform -translate-x-4">
+                      <img
+                        src="https://i2.seadn.io/base/0x6c7726dcbee2ba4aa240f880ac28dd3230b6cb76/0ec270fd216193ce208d90d3854686/5f0ec270fd216193ce208d90d3854686.png?w=1000"
+                        alt="NFT"
+                        className="w-full h-full object-cover rounded-xl mb-3"
+                      />
+                      <p className="text-white font-medium text-sm">Azuki</p>
+                      <p className="text-white/60 text-xs">3.2 QTA</p>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+                      <img
+                        src="https://i2.seadn.io/base/0x7e72abdf47bd21bf0ed6ea8cb8dad60579f3fb50/616debe1ec357bb98e96dd2024b57d/80616debe1ec357bb98e96dd2024b57d.png?w=1000"
+                        alt="NFT"
+                        className="w-full object-cover rounded-xl mb-3"
+                      />
+                      <p className="text-white font-medium text-sm">Bored Ape</p>
+                      <p className="text-white/60 text-xs">500 QTA</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
             </div>
           </div>
@@ -492,7 +492,7 @@ export function MarketplacePage() {
                   {filteredAndSortedNFTs.length} items • {nfts.filter(nft => nft.isListed && nft.listing?.isAuction).length} live auctions
                 </p>
               </div>
-              
+
               <div className="flex flex-wrap gap-3">
                 {pendingReturns > 0n && (
                   <button
@@ -623,11 +623,10 @@ export function MarketplacePage() {
               </div>
             </div>
           ) : (
-            <div className={`grid gap-6 ${
-              viewMode === 'grid' 
-                ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
-                : 'grid-cols-1'
-            }`}>
+            <div className={`grid gap-6 ${viewMode === 'grid'
+              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+              : 'grid-cols-1'
+              }`}>
               {filteredAndSortedNFTs.map((nft) => (
                 <div key={nft.tokenId} className="group">
                   <NFTCard
@@ -653,10 +652,10 @@ export function MarketplacePage() {
       {showBidModal && selectedTokenId !== null && (() => {
         const currentNFT = nfts.find(nft => nft.tokenId === selectedTokenId);
         const currentListing = currentNFT?.listing;
-        const minBid = currentListing?.highestBid && currentListing.highestBid > 0n 
+        const minBid = currentListing?.highestBid && currentListing.highestBid > 0n
           ? currentListing.highestBid + (currentListing.highestBid * 200n) / 10000n
           : currentListing?.price || 0n;
-        
+
         return (
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-gray-800 rounded-2xl p-8 max-w-md w-full border border-gray-700 shadow-2xl transform transition-all duration-300 scale-100">
@@ -667,7 +666,7 @@ export function MarketplacePage() {
                 <h3 className="text-2xl font-bold text-white mb-2">Place Your Bid</h3>
                 <p className="text-gray-400">Join the auction for NFT #{selectedTokenId}</p>
               </div>
-              
+
               {currentListing && (
                 <div className="mb-6 p-4 bg-gradient-to-r from-blue-900/20 to-purple-900/20 rounded-xl border border-blue-700/30">
                   <div className="grid grid-cols-2 gap-4 text-sm">
@@ -675,10 +674,12 @@ export function MarketplacePage() {
                       <p className="text-gray-400 mb-1">Starting Price</p>
                       <p className="text-white font-bold">{formatQTA(currentListing.price)} QTA</p>
                     </div>
-                    {currentListing.highestBid && currentListing.highestBid > 0n && (
+                    {currentListing.highestBid > 0n && (
                       <div>
                         <p className="text-gray-400 mb-1">Current Bid</p>
-                        <p className="text-green-400 font-bold">{formatQTA(currentListing.highestBid)} QTA</p>
+                        <p className="text-green-400 font-bold">
+                          {formatQTA(currentListing.highestBid)} QTA
+                        </p>
                       </div>
                     )}
                   </div>
@@ -689,7 +690,7 @@ export function MarketplacePage() {
                   </div>
                 </div>
               )}
-              
+
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-300 mb-3">
                   Your Bid Amount (QTA)
@@ -734,7 +735,7 @@ export function MarketplacePage() {
                   Place Bid
                 </button>
               </div>
-              
+
               <div className="mt-4 text-xs text-gray-500 text-center">
                 By placing a bid, you agree to our terms and conditions
               </div>
@@ -744,34 +745,34 @@ export function MarketplacePage() {
       })()}
 
       {/* Call to Action Section */}
-    <div className="relative bg-gradient-to-br from-slate-800 via-slate-900 to-gray-900 rounded-3xl overflow-hidden border border-slate-700/50 p-8 md:p-12 text-center text-white">
-  <div className="absolute inset-0 bg-black/20"></div>
-  <div className="relative z-10 max-w-3xl mx-auto">
-    <h2 className="text-3xl md:text-4xl font-bold mb-4">
-      Ready to Start Your NFT Journey?
-    </h2>
-    <p className="text-xl opacity-90 mb-8">
-      Create your own NFTs or discover amazing collections from talented artists around the world.
-    </p>
+      <div className="relative bg-gradient-to-br from-slate-800 via-slate-900 to-gray-900 rounded-3xl overflow-hidden border border-slate-700/50 p-8 md:p-12 text-center text-white">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative z-10 max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Ready to Start Your NFT Journey?
+          </h2>
+          <p className="text-xl opacity-90 mb-8">
+            Create your own NFTs or discover amazing collections from talented artists around the world.
+          </p>
 
-    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-      <Link
-        href="/mint"
-        className="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 rounded-2xl hover:bg-gray-100 transition-all duration-300 font-semibold text-lg transform hover:scale-105"
-      >
-        <Zap className="mr-2 w-5 h-5" />
-        Create Your NFT
-      </Link>
-      <Link
-        href="/my-nfts"
-        className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white rounded-2xl hover:bg-white hover:text-gray-900 transition-all duration-300 font-semibold text-lg"
-      >
-        <Package className="mr-2 w-5 h-5" />
-        View Collection
-      </Link>
-    </div>
-  </div>
-</div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/mint"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 rounded-2xl hover:bg-gray-100 transition-all duration-300 font-semibold text-lg transform hover:scale-105"
+            >
+              <Zap className="mr-2 w-5 h-5" />
+              Create Your NFT
+            </Link>
+            <Link
+              href="/my-nfts"
+              className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white rounded-2xl hover:bg-white hover:text-gray-900 transition-all duration-300 font-semibold text-lg"
+            >
+              <Package className="mr-2 w-5 h-5" />
+              View Collection
+            </Link>
+          </div>
+        </div>
+      </div>
 
     </div>
   );
