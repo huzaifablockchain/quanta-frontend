@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { 
-  Home, 
-  ShoppingBag, 
-  Package, 
-  Zap, 
-  Gavel, 
+import {
+  Home,
+  ShoppingBag,
+  Package,
+  Zap,
+  Gavel,
   Settings,
   Search
 } from 'lucide-react';
@@ -21,9 +21,9 @@ const navigation = [
   { name: 'Dashboard', href: '/', icon: Home },
   { name: 'Marketplace', href: '/marketplace', icon: ShoppingBag },
   { name: 'Mint', href: '/mint', icon: Zap },
-  { name: 'My Collection', href: '/my-nfts', icon: Package },
+  { name: 'My NFTs', href: '/my-nfts', icon: Package },
   { name: 'Auctions', href: '/auctions', icon: Gavel },
-  { name: 'Collection', href: '/collection', icon: Settings },
+  { name: 'Admin  Panel', href: '/collection', icon: Settings },
 ];
 
 const creators = [
@@ -38,7 +38,7 @@ export function Navigation({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen bg-gray-900">
       {/* Sidebar */}
-          <div className="w-64 bg-gradient-to-br from-slate-800 via-slate-900 to-gray-900 border-r border-slate-700/50 flex flex-col hidden lg:flex">
+      <div className="w-64 bg-gradient-to-br from-slate-800 via-slate-900 to-gray-900 border-r border-slate-700/50 flex flex-col hidden lg:flex">
         {/* Header */}
         <div className="p-6 border-b border-slate-700/50">
           <div className="flex items-center space-x-3">
@@ -66,7 +66,7 @@ export function Navigation({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Navigation Links */}
-          <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-4 space-y-2">
           {navigation.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -88,7 +88,7 @@ export function Navigation({ children }: { children: React.ReactNode }) {
         </nav>
 
         {/* Creators Section */}
-          <div className="p-4 border-t border-slate-700/50">
+        <div className="p-4 border-t border-slate-700/50">
           <h3 className="text-xs font-semibold text-slate-400 mb-3 uppercase tracking-wider">
             Popular Creators
           </h3>
@@ -119,27 +119,28 @@ export function Navigation({ children }: { children: React.ReactNode }) {
 
         {/* Earn Section */}
         <div className="p-4 border-t border-slate-700/50">
-          <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg p-3">
+          <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-gray-900 rounded-lg p-3 border border-slate-700/50">
             <h3 className="text-xs font-semibold text-white mb-1">Earn up to</h3>
             <p className="text-lg font-bold text-white">$2,500</p>
-            <p className="text-xs text-pink-200">Create and sell your NFTs</p>
+            <p className="text-xs text-slate-300">Create and sell your NFTs</p>
           </div>
         </div>
+
       </div>
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col">
         {/* Top Bar */}
-          <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-gray-900 border-b border-slate-700/50 p-4">
+        <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-gray-900 border-b border-slate-700/50 p-4">
           <div className="flex items-center justify-between">
             {/* Mobile Menu Button */}
-          <button className="lg:hidden p-2 text-slate-400 hover:text-white">
+            <button className="lg:hidden p-2 text-slate-400 hover:text-white">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            
-             <div className="flex-1 max-w-md mx-4">
+
+            <div className="flex-1 max-w-md mx-4">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
                 <input
@@ -185,7 +186,7 @@ export function Navigation({ children }: { children: React.ReactNode }) {
                 </svg>
               </button>
             </div>
-            
+
             {/* Balance */}
             <div className="mt-4 p-3 bg-gray-700 rounded-lg">
               <div className="flex items-center justify-between">

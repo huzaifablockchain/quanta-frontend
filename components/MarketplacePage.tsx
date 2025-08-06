@@ -342,10 +342,8 @@ export function MarketplacePage() {
   return (
     <div className="space-y-12">
       {/* Enhanced Hero Section */}
-      <div className="relative bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 rounded-3xl overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-blue-600/10"></div>
-        
+      <div className="relative bg-gradient-to-br from-slate-800 via-slate-900 to-gray-900 rounded-3xl overflow-hidden border border-slate-700/50">
+        <div className="absolute inset-0 bg-black/20"></div>        
         <div className="relative z-10 p-8 md:p-16">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -394,60 +392,68 @@ export function MarketplacePage() {
                 </div>
               </div>
 
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-3xl blur-3xl"></div>
-                <div className="relative grid grid-cols-2 gap-4">
-                  <div className="space-y-4">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 transform hover:scale-105 transition-all duration-300">
-                      <div className="w-full h-32 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl mb-3 flex items-center justify-center">
-                        <Eye className="w-8 h-8 text-white" />
-                      </div>
-                      <p className="text-white font-medium text-sm">Digital Art</p>
-                      <p className="text-white/60 text-xs">2.5 QTA</p>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 transform translate-x-8 hover:scale-105 transition-all duration-300">
-                      <div className="w-full h-32 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl mb-3 flex items-center justify-center">
-                        <Star className="w-8 h-8 text-white" />
-                      </div>
-                      <p className="text-white font-medium text-sm">Rare Collection</p>
-                      <p className="text-white/60 text-xs">1.8 QTA</p>
-                    </div>
-                  </div>
-                  <div className="space-y-4 pt-8">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 transform -translate-x-4 hover:scale-105 transition-all duration-300">
-                      <div className="w-full h-32 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl mb-3 flex items-center justify-center">
-                        <Package className="w-8 h-8 text-white" />
-                      </div>
-                      <p className="text-white font-medium text-sm">Gaming NFT</p>
-                      <p className="text-white/60 text-xs">3.2 QTA</p>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 hover:scale-105 transition-all duration-300">
-                      <div className="w-full h-32 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl mb-3 flex items-center justify-center">
-                        <Clock className="w-8 h-8 text-white" />
-                      </div>
-                      <p className="text-white font-medium text-sm">Music NFT</p>
-                      <p className="text-white/60 text-xs">0.95 QTA</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <div className="relative">
+  <div className="grid grid-cols-2 gap-4">
+    <div className="space-y-4">
+      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+        <img
+          src="https://i2.seadn.io/ethereum/0x8a90cab2b38dba80c64b7734e58ee1db38b8992e/7c8f36724756afe46fdf406fdae3d433.png?w=1000000000"
+          alt="NFT"
+          className="w-full h-full object-cover rounded-xl mb-3"
+        />
+        <p className="text-white font-medium text-sm">Doodle in space</p>
+        <p className="text-white/60 text-xs">5 QTA</p>
+      </div>
+      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 transform translate-x-8">
+        <img
+          src="https://i2.seadn.io/ethereum/0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb/67fc91ff36238e9d2dd44825ee48d3/5067fc91ff36238e9d2dd44825ee48d3.png?w=1000"
+          alt="NFT"
+          className="w-full h-full object-cover rounded-xl mb-3"
+        />
+        <p className="text-white font-medium text-sm">Crypto Punk</p>
+        <p className="text-white/60 text-xs">50 QTA</p>
+      </div>
+    </div>
+    <div className="space-y-4 pt-8">
+      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 transform -translate-x-4">
+        <img
+          src="https://i2.seadn.io/base/0x6c7726dcbee2ba4aa240f880ac28dd3230b6cb76/0ec270fd216193ce208d90d3854686/5f0ec270fd216193ce208d90d3854686.png?w=1000"
+          alt="NFT"
+          className="w-full h-full object-cover rounded-xl mb-3"
+        />
+        <p className="text-white font-medium text-sm">Azuki</p>
+        <p className="text-white/60 text-xs">3.2 QTA</p>
+      </div>
+      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+        <img
+          src="https://i2.seadn.io/base/0x7e72abdf47bd21bf0ed6ea8cb8dad60579f3fb50/616debe1ec357bb98e96dd2024b57d/80616debe1ec357bb98e96dd2024b57d.png?w=1000"
+          alt="NFT"
+          className="w-full object-cover rounded-xl mb-3"
+        />
+        <p className="text-white font-medium text-sm">Bored Ape</p>
+        <p className="text-white/60 text-xs">500 QTA</p>
+      </div>
+    </div>
+  </div>
+</div>
+
             </div>
           </div>
         </div>
       </div>
 
-      {/* Enhanced Categories */}
-      <div>
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 className="text-3xl font-bold text-white mb-2">Browse Categories</h2>
-            <p className="text-gray-400">Discover NFTs across different categories</p>
+      {/* Enhanced Categories
+        <div>
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-3xl font-bold text-white mb-2">Browse Categories</h2>
+              <p className="text-gray-400">Discover NFTs across different categories</p>
+            </div>
+            <Link href="#" className="text-blue-400 hover:text-blue-300 font-medium flex items-center group">
+              View All 
+              <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
-          <Link href="#" className="text-blue-400 hover:text-blue-300 font-medium flex items-center group">
-            View All 
-            <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
         
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {categories.map((category) => (
@@ -469,7 +475,7 @@ export function MarketplacePage() {
             </button>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Actual Marketplace Content */}
       {filteredAndSortedNFTs.length > 0 && (
@@ -738,34 +744,35 @@ export function MarketplacePage() {
       })()}
 
       {/* Call to Action Section */}
-      <div className="bg-gradient-to-r from-purple-900 via-blue-900 to-indigo-900 rounded-3xl p-8 md:p-12 text-center text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative z-10 max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Start Your NFT Journey?
-          </h2>
-          <p className="text-xl opacity-90 mb-8">
-            Create your own NFTs or discover amazing collections from talented artists around the world.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/mint"
-              className="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 rounded-2xl hover:bg-gray-100 transition-all duration-300 font-semibold text-lg transform hover:scale-105"
-            >
-              <Zap className="mr-2 w-5 h-5" />
-              Create Your NFT
-            </Link>
-            <Link
-              href="/my-nfts"
-              className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white rounded-2xl hover:bg-white hover:text-gray-900 transition-all duration-300 font-semibold text-lg"
-            >
-              <Package className="mr-2 w-5 h-5" />
-              View Collection
-            </Link>
-          </div>
-        </div>
-      </div>
+    <div className="relative bg-gradient-to-br from-slate-800 via-slate-900 to-gray-900 rounded-3xl overflow-hidden border border-slate-700/50 p-8 md:p-12 text-center text-white">
+  <div className="absolute inset-0 bg-black/20"></div>
+  <div className="relative z-10 max-w-3xl mx-auto">
+    <h2 className="text-3xl md:text-4xl font-bold mb-4">
+      Ready to Start Your NFT Journey?
+    </h2>
+    <p className="text-xl opacity-90 mb-8">
+      Create your own NFTs or discover amazing collections from talented artists around the world.
+    </p>
+
+    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      <Link
+        href="/mint"
+        className="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 rounded-2xl hover:bg-gray-100 transition-all duration-300 font-semibold text-lg transform hover:scale-105"
+      >
+        <Zap className="mr-2 w-5 h-5" />
+        Create Your NFT
+      </Link>
+      <Link
+        href="/my-nfts"
+        className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white rounded-2xl hover:bg-white hover:text-gray-900 transition-all duration-300 font-semibold text-lg"
+      >
+        <Package className="mr-2 w-5 h-5" />
+        View Collection
+      </Link>
+    </div>
+  </div>
+</div>
+
     </div>
   );
 }

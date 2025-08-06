@@ -19,63 +19,12 @@ const categories = [
   { name: 'Photography', icon: Camera, active: false },
 ];
 
-const featuredNFTs = [
-  {
-    id: 1,
-    title: "Cosmic Dreams #247",
-    creator: "ArtistDAO",
-    image: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=400&h=400&fit=crop",
-    price: "2.5 QTA",
-    usdPrice: "$4,250",
-    likes: 234,
-    views: 1250,
-    timeLeft: "2h 15m",
-    isLive: true
-  },
-  {
-    id: 2,
-    title: "Neon Genesis",
-    creator: "CyberPunk",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&h=400&fit=crop",
-    price: "1.8 QTA",
-    usdPrice: "$3,060",
-    likes: 189,
-    views: 980,
-    timeLeft: "1d 8h",
-    isLive: true
-  },
-  {
-    id: 3,
-    title: "Abstract Mind",
-    creator: "DeepArt",
-    image: "https://images.unsplash.com/photo-1635776062043-223faf322554?w=400&h=400&fit=crop",
-    price: "3.2 QTA",
-    usdPrice: "$5,440",
-    likes: 456,
-    views: 2100,
-    timeLeft: "5h 42m",
-    isLive: true
-  },
-  {
-    id: 4,
-    title: "Digital Harmony",
-    creator: "SoundWave",
-    image: "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=400&h=400&fit=crop",
-    price: "0.95 QTA",
-    usdPrice: "$1,615",
-    likes: 123,
-    views: 567,
-    timeLeft: "3d 12h",
-    isLive: false
-  }
-];
-
 const trendingCollections = [
   {
     name: "QuantaVerse",
-    floorPrice: "20 QTA",
-    change: "+12.5%",
-    volume: "30 QTA",
+    floorPrice: "38 QTA",
+    change: "+30.5%",
+    volume: "1.2K QTA",
     items: 3,
     image: "https://images.unsplash.com/photo-1617791160536-598cf32026fb?w=80&h=80&fit=crop",
     verified: true
@@ -87,8 +36,8 @@ const topCreators = [
     name: "Huzaifa Khan",
     username: "@Huzaifa Khan",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face",
-    sales: "30 QTA",
-    change: "+23%"
+    sales: "999.85M QTA",
+    change: "+85.99%"
   }
 ];
 
@@ -221,26 +170,40 @@ export default function HomePage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-4">
                     <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
-                      <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=200&h=200&fit=crop" alt="NFT" className="w-full h-32 object-cover rounded-xl mb-3" />
-                      <p className="text-white font-medium text-sm">Cosmic Dreams</p>
-                      <p className="text-white/60 text-xs">2.5 QTA</p>
+                      <div className="aspect-w-1 aspect-h-1">
+                        <img
+                          src="https://i2.seadn.io/ethereum/0x8a90cab2b38dba80c64b7734e58ee1db38b8992e/7c8f36724756afe46fdf406fdae3d433.png?w=1000000000"
+                          alt="NFT"
+                          className="w-full h-full object-cover rounded-xl mb-3"
+                        />
+                      </div>
+                      <p className="text-white font-medium text-sm">Doodle in space</p>
+                      <p className="text-white/60 text-xs">5 QTA</p>
                     </div>
                     <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 transform translate-x-8">
-                      <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200&h=200&fit=crop" alt="NFT" className="w-full h-32 object-cover rounded-xl mb-3" />
-                      <p className="text-white font-medium text-sm">Neon Genesis</p>
-                      <p className="text-white/60 text-xs">1.8 QTA</p>
+                      <img src="https://i2.seadn.io/ethereum/0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb/67fc91ff36238e9d2dd44825ee48d3/5067fc91ff36238e9d2dd44825ee48d3.png?w=1000" alt="NFT" className="w-full h-full object-cover rounded-xl mb-3" />
+                      <p className="text-white font-medium text-sm">Crypto Punk</p>
+                      <p className="text-white/60 text-xs">50 QTA</p>
                     </div>
                   </div>
                   <div className="space-y-4 pt-8">
                     <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 transform -translate-x-4">
-                      <img src="https://media.istockphoto.com/id/978387300/photo/mind-coloring.jpg?s=612x612&w=0&k=20&c=ftjnmfpas_PEeAWtG-wdMFyCqOjKRz9I1ngeWgUOIs0=" alt="NFT" className="w-full h-32 object-cover rounded-xl mb-3" />
-                      <p className="text-white font-medium text-sm">Abstract Mind</p>
+                      <img
+                          src="https://i2.seadn.io/base/0x6c7726dcbee2ba4aa240f880ac28dd3230b6cb76/0ec270fd216193ce208d90d3854686/5f0ec270fd216193ce208d90d3854686.png?w=1000"
+                          alt="NFT"
+                          className="w-full h-full object-cover rounded-xl mb-3"
+                        />                      <p className="text-white font-medium text-sm">Azuki</p>
                       <p className="text-white/60 text-xs">3.2 QTA</p>
                     </div>
                     <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
-                      <img src="https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=200&h=200&fit=crop" alt="NFT" className="w-full h-32 object-cover rounded-xl mb-3" />
-                      <p className="text-white font-medium text-sm">Digital Harmony</p>
-                      <p className="text-white/60 text-xs">0.95 QTA</p>
+                      <img 
+                          src="https://i2.seadn.io/base/0x7e72abdf47bd21bf0ed6ea8cb8dad60579f3fb50/616debe1ec357bb98e96dd2024b57d/80616debe1ec357bb98e96dd2024b57d.png?w=1000" 
+                           alt="NFT" 
+  className="w-full object-cover rounded-xl mb-3"
+/>
+
+                      <p className="text-white font-medium text-sm">Bored Ape</p>
+                      <p className="text-white/60 text-xs">500 QTA</p>
                     </div>
                   </div>
                 </div>
@@ -253,19 +216,19 @@ export default function HomePage() {
       {/* Stats Section */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700">
-          <div className="text-3xl md:text-4xl font-bold text-white mb-2">2+</div>
+          <div className="text-3xl md:text-4xl font-bold text-white mb-2">10+</div>
           <div className="text-gray-400 font-medium">Total NFTs</div>
-          <div className="text-green-400 text-sm mt-1">+12% this week</div>
+          <div className="text-green-400 text-sm mt-1">+52% this week</div>
         </div>
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700">
           <div className="text-3xl md:text-4xl font-bold text-white mb-2">12+</div>
           <div className="text-gray-400 font-medium">Active Users</div>
-          <div className="text-green-400 text-sm mt-1">+8% this week</div>
+          <div className="text-green-400 text-sm mt-1">+43% this week</div>
         </div>
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700">
-          <div className="text-3xl md:text-4xl font-bold text-white mb-2">45+ QTA</div>
+          <div className="text-3xl md:text-4xl font-bold text-white mb-2">1.2K+ QTA</div>
           <div className="text-gray-400 font-medium">Volume Traded</div>
-          <div className="text-green-400 text-sm mt-1">+23% this week</div>
+          <div className="text-green-400 text-sm mt-1">+80% this week</div>
         </div>
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700">
           <div className="text-3xl md:text-4xl font-bold text-white mb-2">1</div>
@@ -298,9 +261,9 @@ export default function HomePage() {
       <div>
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl font-bold text-white">Trending Collections</h2>
-          <Link href="/my-nfts" className="text-blue-400 hover:text-blue-300 font-medium flex items-center">
+          {/* <Link href="/my-nfts" className="text-blue-400 hover:text-blue-300 font-medium flex items-center">
             View All <ArrowRight className="ml-1 w-4 h-4" />
-          </Link>
+          </Link> */}
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -356,9 +319,9 @@ export default function HomePage() {
       <div>
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl font-bold text-white">Live Auctions</h2>
-          <Link href="/auctions" className="text-violet-400 hover:text-violet-300 font-medium flex items-center">
+          {/* <Link href="/auctions" className="text-violet-400 hover:text-violet-300 font-medium flex items-center">
             View All <ArrowRight className="ml-1 w-4 h-4" />
-          </Link>
+          </Link> */}
         </div>
         
         {loadingAuctions ? (
@@ -410,9 +373,9 @@ export default function HomePage() {
       <div>
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl font-bold text-white">Top Creators</h2>
-          <Link href="/creators" className="text-violet-400 hover:text-violet-300 font-medium flex items-center">
+          {/* <Link href="/creators" className="text-violet-400 hover:text-violet-300 font-medium flex items-center">
             View All <ArrowRight className="ml-1 w-4 h-4" />
-          </Link>
+          </Link> */}
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -438,7 +401,7 @@ export default function HomePage() {
                 </div>
                 <div className="text-right">
                   <p className="text-green-400 font-semibold">{creator.change}</p>
-                  <p className="text-gray-400 text-sm">7 days</p>
+                  <p className="text-gray-400 text-sm">3 days</p>
                 </div>
               </div>
             </div>
